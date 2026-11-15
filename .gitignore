@@ -1,0 +1,6 @@
+# 构建时克隆的 tree-sitter-cpp 源码（build.ps1 自动管理，不入库）
+src/
+# 验证运行的临时产物
+verify/result.txt
+*.log
+*.tmp

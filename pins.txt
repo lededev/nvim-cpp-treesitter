@@ -1,0 +1,20 @@
+# 钉住的版本矩阵（build.ps1 从这里读取）
+#
+# 钉版说明（重要）：
+#   tree_sitter_cpp 钉的是【commit SHA】而不是 tag。原因：本项目查询用到的
+#   module_name 等 C++20 模块节点只存在于 master，任何已发布 tag（含 v0.23.4）
+#   都没有——用 v0.23.4 编译的 dll 会在查询里报 Invalid node type "module_name"。
+#   当前 SHA = master HEAD @ 2026-02-21（此后 master 未再动过 grammar）。
+#
+# ABI 规则：tree-sitter 运行时向后兼容 —— parser 的 LANGUAGE_VERSION 只要
+# ≤ Neovim 的 language_version 就能加载。当前组合两边都是 15（精确匹配）。
+# parser 侧的 ABI 在【生成的】 src/parser.c 顶部（#define LANGUAGE_VERSION N）；
+# 新版仓库的 src/tree_sitter/parser.h 里已无此定义。
+neovim=0.12.6
+neovim_abi=15
+tree_sitter_cpp=80f5bd82d3b4a1acf07f34a569d88a4a29f74c42
+parser_abi=15
+compiler=MSYS2 UCRT64 gcc 16.2.0
+flags=-O2 -std=c11 -fPIC -shared -Isrc -static-libgcc
+built=2026-11-15
+dll_sha_note=out\cpp.dll 由上述配方构建，5607225 字节（与此 SHA 位级一致）
